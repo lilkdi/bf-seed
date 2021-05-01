@@ -3,7 +3,7 @@
 * When find a seed will save in the logs
 * It scan about 20 seeds/sec
 * Each seed can have hundreds (or more) addresses
-* email@brunodasilva.com
+* github.com/lilkdi/bf-seed
 */
 
 
@@ -22,7 +22,8 @@ setInterval(function() {
   var xPubKeys = []
   for(var i = 0; i < 20; i++) {
     xSeedPrv[i] = bip39.entropyToMnemonic(crypto.randomBytes(16).toString('hex'))
-    xPubKeys[i] = getPubKeyFromRoot(bip32.fromSeed(bip39.mnemonicToSeed(xSeedPrv[i] , "")), DerivationPath)
+    xPubKeys[i] = getPubKeyFromRoot(bip32.fromSeed(bip39.mnemonicToSeedSync(xSeedPrv[i] , "")), DerivationPath)
+    console.log(xPubKeys[i])
   }
   blockchain.getMultiAddress(xPubKeys, {}).then(function(valor) {
     if(valor && valor.wallet && valor.wallet.n_tx > 0) {
